@@ -11,7 +11,7 @@ mean_partie_time = []
 t1, t2 = 0, 0
 
 depth_player_1 = 15
-depth_player_2 = 5
+depth_player_2 = 10
 
 # print(f"nombre de piece : {checker_model_object.number_of_piece}")
 
@@ -23,9 +23,9 @@ for _ in tqdm.tqdm(range(number_games_to_test)):
 
 	while True:
 		t1 = time.time()
-		# checker_model_object.ia_move(model="minimax", depth_minimax=depth_minimax_player_1, to_maximise=True)
-		# checker_model_object.ia_move(model="random")
-		checker_model_object.ia_move(model="montecarlo", number_of_games=30,depth=depth_player_1, agent_turn=-1)
+		# checker_model_object.ia_move(model="minimax", depth_minimax=3, to_maximise=True)
+		checker_model_object.ia_move(model="random")
+		# checker_model_object.ia_move(model="montecarlo", number_of_games=30,depth=depth_player_1, agent_turn=-1)
 		game_state = checker_model_object.check_game_state()
 		if game_state == "draw_game":
 			break
@@ -35,9 +35,9 @@ for _ in tqdm.tqdm(range(number_games_to_test)):
 			break
 
 
-		checker_model_object.ia_move(model="random")
-		# checker_model_object.ia_move(model="montecarlo", number_of_games=number_games_to_test, player=1)
-		# checker_model_object.ia_move(model="minimax", depth_minimax=depth_minimax_player_2, to_maximise=False)
+		# checker_model_object.ia_move(model="random")
+		checker_model_object.ia_move(model="montecarlo", number_of_games=10,depth=depth_player_2, agent_turn=1)
+		# checker_model_object.ia_move(model="minimax", depth_minimax=5, to_maximise=False)
 		game_state = checker_model_object.check_game_state()
 		if game_state == "draw_game":
 			break
@@ -53,16 +53,17 @@ for _ in tqdm.tqdm(range(number_games_to_test)):
 	t1, t2 =  0, 0
 
 
-
+average_game_time = sum(mean_partie_time) / len(mean_partie_time)
 
 # print
-
-print(f"nombre de pieces : {checker_model_object.number_of_piece}")
+print()
+print(f"number of games : {number_games_to_test}")
+print(f"number of pieces : {checker_model_object.number_of_piece}")
 print(f"player 1  wins {wins_player_1}")
 print(f"player 2  wins {wins_player_2}")
 print(f"draws {number_games_to_test - wins_player_1 - wins_player_2}")
-print(f"average game time: {sum(mean_partie_time) / len(mean_partie_time) }")
-print(f"game time: {sum(mean_partie_time)}")
+print(f"average game time: {average_game_time:.2f}s")
+print(f"game time: {sum(mean_partie_time):.2f}s")
 
 if depth_player_1:
 	print()
